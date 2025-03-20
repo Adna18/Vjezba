@@ -1,7 +1,10 @@
 ﻿using eCommerce.Model;
 using eCommerce.Model.SearchObjects;
+using eCommerce.Model.Responses;
 using eCommerce.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eCommerce.WebAPI.Controllers
 {
@@ -10,20 +13,21 @@ namespace eCommerce.WebAPI.Controllers
     public class ProductController : ControllerBase
     {
         protected readonly IProductService _productService;
+        
         public ProductController(IProductService service) {
             _productService = service;
         }
 
         [HttpGet("")]
-        public IEnumerable<Product> Get([FromQuery]ProductSearchObject? search)
+        public async Task<IEnumerable<ProductResponse>> Get([FromQuery]ProductSearchObject? search = null)
         {
-            return _productService.Get(search);
+            return await _productService.GetAsync(search ?? new ProductSearchObject());
         }
 
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public async Task<ProductResponse?> GetById(int id)
         {
-            return _productService.Get(id);
+            return await _productService.GetByIdAsync(id);
         }
     }
 }

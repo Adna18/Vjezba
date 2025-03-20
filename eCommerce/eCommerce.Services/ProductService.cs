@@ -1,5 +1,8 @@
 ﻿using eCommerce.Model;
 using eCommerce.Model.SearchObjects;
+using eCommerce.Model.Responses;
+using eCommerce.Services.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +13,53 @@ namespace eCommerce.Services
 {
     public class ProductService : IProductService
     {
-        public List<Product> Get(ProductSearchObject search)
+        private readonly eCommerceDbContext _context;
+
+        public ProductService(eCommerceDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Product Get(int id)
+        public async Task<List<ProductResponse>> GetAsync(ProductSearchObject search)
         {
-            throw new NotImplementedException();
+            var query = _context.Products.AsQueryable();
+            
+            if (!string.IsNullOrEmpty(search.Code))
+            {
+                query = query.Where(p => p.SKU.Contains(search.Code));
+            }
+            
+            if (!string.IsNullOrEmpty(search.CodeGTE))
+            {
+                query = query.Where(p => p.SKU.StartsWith(search.CodeGTE));
+            }
+            
+            if (!string.IsNullOrEmpty(search.FTS))
+            {
+                query = query.Where(p => 
+                    (p.SKU != null && p.SKU.Contains(search.FTS)) || 
+                    p.Name.Contains(search.FTS) ||
+                    p.Description.Contains(search.FTS));
+            }
+            
+            var products = await query.ToListAsync();
+            return products.Select(MapToResponse).ToList();
+        }
+
+        public async Task<ProductResponse?> GetByIdAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            return product != null ? MapToResponse(product) : null;
+        }
+
+        private ProductResponse MapToResponse(Database.Product product)
+        {
+            return new ProductResponse
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Code = product.SKU ?? string.Empty
+            };
         }
     }
 }
