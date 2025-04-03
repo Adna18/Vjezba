@@ -12,7 +12,8 @@ using MapsterMapper;
 namespace eCommerce.Services
 {
     public abstract class BaseCRUDService<T, TSearch, TEntity, TInsert, TUpdate> 
-    : BaseService<T, TSearch, TEntity> where T : class where TSearch : BaseSearchObject where TEntity : class, new() where TInsert : class where TUpdate : class
+    : BaseService<T, TSearch, TEntity>, ICRUDService<T, TSearch, TInsert, TUpdate> 
+    where T : class where TSearch : BaseSearchObject where TEntity : class, new() where TInsert : class where TUpdate : class
     {
         protected readonly eCommerceDbContext _context;
 
