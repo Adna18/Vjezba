@@ -13,8 +13,10 @@ namespace eCommerce.WebAPI.Controllers
    
     public class ProductController : BaseCRUDController<ProductResponse, ProductSearchObject, ProductInsertRequest, ProductUpdateRequest>
     {
+        IProductService _productService;
         public ProductController(IProductService service) : base(service)
         {
+            _productService = service;
         }
 
         [HttpPost]
@@ -23,5 +25,18 @@ namespace eCommerce.WebAPI.Controllers
         {
             return await _crudService.CreateAsync(request);
         }
+
+        [HttpPut("{id}/activate")]
+        public virtual async Task<ProductResponse?> ActivateAsync(int id)
+        {
+            return await _productService.ActivateAsync(id);
+        }
+
+        [HttpPut("{id}/deactivate")]
+        public virtual async Task<ProductResponse?> DeactivateAsync(int id)
+        {
+            return await _productService.DeactivateAsync(id);
+        }
+
     }
 }

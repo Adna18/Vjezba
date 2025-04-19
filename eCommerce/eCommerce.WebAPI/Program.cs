@@ -1,5 +1,6 @@
 using eCommerce.Services;
 using eCommerce.Services.Database;
+using eCommerce.Services.ProductStateMachine;
 using eCommerce.WebAPI.Filters;
 using Mapster;
 using MapsterMapper;
@@ -14,6 +15,12 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 
+builder.Services.AddTransient<BaseProductState>();
+builder.Services.AddTransient<InitialProductState>();
+builder.Services.AddTransient<DraftProductState>();
+builder.Services.AddTransient<ActiveProductState>();
+builder.Services.AddTransient<DeactivatedProductState>();
+
 builder.Services.AddMapster();
 // Configure database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Server=localhost;Database=eCommerceDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
@@ -22,7 +29,11 @@ builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers( x=> 
+    {
+        x.Filters.Add<ExceptionFilter>();
+    }
+);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
