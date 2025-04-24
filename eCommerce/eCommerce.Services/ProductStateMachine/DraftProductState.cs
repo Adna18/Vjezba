@@ -9,6 +9,8 @@ using System.Linq;
 using System;
 using MapsterMapper;
 using eCommerce.Model;
+using EasyNetQ;
+using eCommerce.Model.Messages;
 
 namespace eCommerce.Services.ProductStateMachine
 {
@@ -26,7 +28,18 @@ namespace eCommerce.Services.ProductStateMachine
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<ProductResponse>(entity);
+            var bus = RabbitHutch.CreateBus("host=localhost");
+           
+
+            var response = _mapper.Map<ProductResponse>(entity);
+
+            var productUpdated = new ProductUpdated
+            {
+               Product = response
+            };
+            await bus.PubSub.PublishAsync(productUpdated);
+
+            return response;
         }
 
         public override async Task<ProductResponse> ActivateAsync(int id)

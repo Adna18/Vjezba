@@ -44,6 +44,11 @@ namespace eCommerce.Services
         public override async Task<ProductResponse?> UpdateAsync(int id, ProductUpdateRequest request)
         {
             var entity =  await _context.Products.FindAsync(id);
+            //check if entity is null
+            if (entity == null)
+            {
+                throw new UserException("Product not found");
+            }
             var baseState = _baseProductState.GetProductState(entity.ProductState);
             return await baseState.UpdateAsync(id, request);
             // return base.UpdateAsync(id, request);
