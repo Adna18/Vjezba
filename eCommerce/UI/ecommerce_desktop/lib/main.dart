@@ -1,60 +1,105 @@
+import 'package:ecommerce_desktop/providers/auth_provider.dart';
+import 'package:ecommerce_desktop/providers/logged_product_provider.dart';
+import 'package:ecommerce_desktop/providers/product_provider.dart';
+import 'package:ecommerce_desktop/screens/product_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const LoginPage());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<ProductProvider>(
+        create: (context) => LoggedProductProvider()),
+  ], child: const MyLoginApp()));
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class MyLoginApp extends StatelessWidget {
+  const MyLoginApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, primary: Colors.red),
-      
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Colors.blue, primary: Colors.red),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Login'),
-        ),
-        body: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 400, maxHeight: 499),
-            child: Card(
-                child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Image.network(
-                    "https://fit.ba/content/763cbb87-718d-4eca-a991-343858daf424",
-                    width: 150,
-                    height: 150,
+      home: LoginScreen(),
+    );
+  }
+}
+
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 400, maxHeight: 499),
+          child: Card(
+              child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Image.network(
+                  "https://fit.ba/content/763cbb87-718d-4eca-a991-343858daf424",
+                  width: 150,
+                  height: 150,
+                ),
+                TextField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                      hintText: 'Username', icon: Icon(Icons.person)),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    hintText: 'Password',
+                    icon: Icon(Icons.password),
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Username',
-                      icon: Icon(Icons.person)
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      icon: Icon(Icons.password),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      print('Login');
-                    },
-                    child: const Text('Login'),
-                  )
-                ],
-              ),
-            )),
-          ),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () async {
+                    AuthProvider.username = usernameController.text;
+                    AuthProvider.password = passwordController.text;
+                    try {
+                      print(
+                          "Username: ${AuthProvider.username}, Password: ${AuthProvider.password}");
+                      var productProvider = ProductProvider();
+                      var products = await productProvider.get();
+                     
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductList()));
+                    } on Exception catch (e) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text("Error"),
+                                content: Text(e.toString()),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text("OK"))
+                                ],
+                              ));
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child: const Text('Login'),
+                )
+              ],
+            ),
+          )),
         ),
       ),
     );

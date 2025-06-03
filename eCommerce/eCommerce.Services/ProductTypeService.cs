@@ -43,7 +43,6 @@ namespace eCommerce.Services
         protected override Task BeforeInsert(ProductType entity, ProductTypeUpsertRequest request)
         { 
             _logger.LogInformation($"User is trying to add product type {request.Name}");
-            throw new UserException("Nije dozvoljeno");
 
             return base.BeforeInsert(entity, request);
         }

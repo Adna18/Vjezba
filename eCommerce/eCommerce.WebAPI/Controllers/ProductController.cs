@@ -20,7 +20,7 @@ namespace eCommerce.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        // [Authorize(Roles = "Administrator")]
         public override async Task<ProductResponse> Create([FromBody] ProductInsertRequest request)
         {
             return await _crudService.CreateAsync(request);
