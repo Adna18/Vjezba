@@ -1,6 +1,8 @@
 import 'package:ecommerce_desktop/providers/auth_provider.dart';
 import 'package:ecommerce_desktop/providers/logged_product_provider.dart';
 import 'package:ecommerce_desktop/providers/product_provider.dart';
+import 'package:ecommerce_desktop/providers/product_type_provider.dart';
+import 'package:ecommerce_desktop/providers/unit_of_measure_provider.dart';
 import 'package:ecommerce_desktop/screens/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +10,11 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ProductProvider>(
-        create: (context) => LoggedProductProvider()),
+        create: (context) => ProductProvider()),
+    ChangeNotifierProvider<UnitOfMeasureProvider>(
+        create: (context) => UnitOfMeasureProvider()),
+    ChangeNotifierProvider<ProductTypeProvider>(
+        create: (context) => ProductTypeProvider()),
   ], child: const MyLoginApp()));
 }
 

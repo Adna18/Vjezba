@@ -29,6 +29,8 @@ namespace eCommerce.Services
                 query = query.Where(p => p.Name.Contains(search.FTS) || p.Description.Contains(search.FTS));
             }
 
+            query = query.Include(x => x.Assets);
+
             return query;
         }
 
@@ -43,7 +45,7 @@ namespace eCommerce.Services
 
         public override async Task<ProductResponse?> UpdateAsync(int id, ProductUpdateRequest request)
         {
-            var entity =  await _context.Products.FindAsync(id);
+            var entity = await _context.Products.FindAsync(id);
             //check if entity is null
             if (entity == null)
             {
@@ -56,7 +58,7 @@ namespace eCommerce.Services
 
         public async Task<ProductResponse> ActivateAsync(int id)
         {
-            var entity =  await _context.Products.FindAsync(id);
+            var entity = await _context.Products.FindAsync(id);
             var baseState = _baseProductState.GetProductState(entity.ProductState);
 
             return await baseState.ActivateAsync(id);
@@ -64,10 +66,27 @@ namespace eCommerce.Services
 
         public async Task<ProductResponse> DeactivateAsync(int id)
         {
-            var entity =  await _context.Products.FindAsync(id);
+            var entity = await _context.Products.FindAsync(id);
             var baseState = _baseProductState.GetProductState(entity.ProductState);
 
             return await baseState.DeactivateAsync(id);
+        }
+
+        public List<string> AllowedActions(int id)
+        {
+            if (id <= 0)
+            {
+                var initialBaseState = _baseProductState.GetProductState("InitialProductState");
+                return initialBaseState.AllowedActions(id);
+            }
+
+            var entity = _context.Products.Find(id);
+            if (entity == null)
+            {
+                throw new UserException("Product not found");
+            }
+            var baseState = _baseProductState.GetProductState(entity.ProductState);
+            return baseState.AllowedActions(id);
         }
     }
 }

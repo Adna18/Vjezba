@@ -14,5 +14,6 @@ namespace eCommerce.Services
     {
         Task<ProductResponse> ActivateAsync(int id);
         Task<ProductResponse> DeactivateAsync(int id);
+        List<string> AllowedActions(int id);
     }
 }

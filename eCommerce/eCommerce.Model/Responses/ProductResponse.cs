@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace eCommerce.Model.Responses
@@ -46,8 +47,8 @@ namespace eCommerce.Model.Responses
         // public UnitOfMeasure? UnitOfMeasure { get; set; }
         
         // Navigation property for assets (images)
-        // public ICollection<Asset> Assets { get; set; } = new List<Asset>();
-        
+        public ICollection<AssetResponse> Assets { get; set; } = new List<AssetResponse>();
+
         // Navigation property for product categories (many-to-many)
         // public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
         

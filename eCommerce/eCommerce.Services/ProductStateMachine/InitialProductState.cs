@@ -36,7 +36,27 @@ namespace eCommerce.Services.ProductStateMachine
             _context.Products.Add(entity);
             await _context.SaveChangesAsync();
 
+            if (request.AssetInsertRequest != null)
+            {
+                Asset asset = new Asset
+                {
+                    ProductId = entity.Id,
+                    FileName = request.AssetInsertRequest.FileName,
+                    Base64Content = request.AssetInsertRequest.Base64Content,
+                    ContentType = request.AssetInsertRequest.ContentType,
+                };
+
+
+                _context.Assets.Add(asset);
+                await _context.SaveChangesAsync();
+            }
+
             return _mapper.Map<ProductResponse>(entity);
+        }
+
+        public override List<string> AllowedActions(int id)
+        {
+            return new List<string>() { nameof(CreateAsync) };
         }
     }
 } 

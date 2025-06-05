@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerce.WebAPI.Controllers
 {
-   
+
     public class ProductController : BaseCRUDController<ProductResponse, ProductSearchObject, ProductInsertRequest, ProductUpdateRequest>
     {
         IProductService _productService;
@@ -38,5 +38,10 @@ namespace eCommerce.WebAPI.Controllers
             return await _productService.DeactivateAsync(id);
         }
 
+        [HttpGet("{id}/allowed-actions")]
+        public virtual List<string> AllowedActions(int id)
+        {
+            return _productService.AllowedActions(id);
+        }
     }
 }

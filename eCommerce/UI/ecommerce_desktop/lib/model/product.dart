@@ -11,6 +11,8 @@ class Product {
   final String code;
   final String productState;
   final double? price;
+  final int? unitOfMeasureId;
+  final int? productTypeId;
 
   Product({
     this.id = 0,
@@ -18,6 +20,8 @@ class Product {
     this.code = '',
     this.productState = 'ActiveProductState',
     this.price = 0,
+    this.unitOfMeasureId,
+    this.productTypeId,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);

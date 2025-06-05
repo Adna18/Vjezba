@@ -81,6 +81,13 @@ class _ProductListState extends State<ProductList> {
                 setState(() {});
               },
               child: Text("Search"),
+            ),
+            SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(product: null)));
+              },
+              child: Text("New"),
             )
           ],
         ));

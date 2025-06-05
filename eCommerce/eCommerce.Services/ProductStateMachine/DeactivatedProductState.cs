@@ -27,5 +27,10 @@ namespace eCommerce.Services.ProductStateMachine
 
             return _mapper.Map<ProductResponse>(entity);
         }
+
+        public override List<string> AllowedActions(int id)
+        {
+            return new List<string>() { nameof(UpdateAsync) };
+        }
     }
 } 

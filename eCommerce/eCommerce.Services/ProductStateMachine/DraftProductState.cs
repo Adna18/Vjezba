@@ -29,15 +29,15 @@ namespace eCommerce.Services.ProductStateMachine
             await _context.SaveChangesAsync();
 
             var bus = RabbitHutch.CreateBus("host=localhost");
-           
+
 
             var response = _mapper.Map<ProductResponse>(entity);
 
             var productUpdated = new ProductUpdated
             {
-               Product = response
+                Product = response
             };
-            await bus.PubSub.PublishAsync(productUpdated);
+            //await bus.PubSub.PublishAsync(productUpdated);
 
             return response;
         }
@@ -61,6 +61,11 @@ namespace eCommerce.Services.ProductStateMachine
             await _context.SaveChangesAsync();
 
             return _mapper.Map<ProductResponse>(entity);
+        }
+
+        public override List<string> AllowedActions(int id)
+        {
+            return new List<string>() { nameof(ActivateAsync), nameof(UpdateAsync), nameof(DeactivateAsync) };
         }
     }
 } 
