@@ -43,5 +43,16 @@ namespace eCommerce.WebAPI.Controllers
         {
             return _productService.AllowedActions(id);
         }
+        [HttpPost("dummy-orders")]
+        public virtual async Task CreateDummyOrderDataAsync(int userId, int numberOfOrders = 10)
+        {
+            await _productService.CreateDummyOrderDataAsync(userId, numberOfOrders);
+        }
+
+        [HttpGet("{id}/recommend")]
+        public virtual List<ProductResponse> Recommend(int id)
+        {
+            return _productService.Recommend(id);
+        }
     }
 }

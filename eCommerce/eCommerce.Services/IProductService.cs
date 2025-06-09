@@ -15,5 +15,7 @@ namespace eCommerce.Services
         Task<ProductResponse> ActivateAsync(int id);
         Task<ProductResponse> DeactivateAsync(int id);
         List<string> AllowedActions(int id);
+        Task CreateDummyOrderDataAsync(int userId, int numberOfOrders = 10);
+        List<ProductResponse> Recommend(int id);
     }
 }
