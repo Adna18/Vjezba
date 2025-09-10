@@ -22,6 +22,10 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
+        public DbSet<Activity> Activity { get; set; }
+        public DbSet<UserActivity> UserActivity { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
