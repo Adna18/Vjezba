@@ -16,6 +16,8 @@ builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUnitOfMeasureService, UnitOfMeasureService>();
 builder.Services.AddTransient<IActivityService, ActivityService>();
+builder.Services.AddTransient<IUserActivityService, UserActivityService>();
+
 
 
 builder.Services.AddTransient<BaseProductState>();
