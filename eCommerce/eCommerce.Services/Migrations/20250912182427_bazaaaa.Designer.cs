@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce.Services.Database;
 
@@ -11,9 +12,11 @@ using eCommerce.Services.Database;
 namespace eCommerce.Services.Migrations
 {
     [DbContext(typeof(eCommerceDbContext))]
-    partial class eCommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250912182427_bazaaaa")]
+    partial class bazaaaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -435,33 +438,6 @@ namespace eCommerce.Services.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("eCommerce.Services.Database.RewardRule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaxDaysToComplete")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfPoints")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RewardTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("RewardRule");
-                });
-
             modelBuilder.Entity("eCommerce.Services.Database.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -799,15 +775,6 @@ namespace eCommerce.Services.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("eCommerce.Services.Database.RewardRule", b =>
-                {
-                    b.HasOne("eCommerce.Services.Database.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId");
-
-                    b.Navigation("Activity");
                 });
 
             modelBuilder.Entity("eCommerce.Services.Database.UserActivity", b =>

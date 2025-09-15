@@ -7,23 +7,23 @@ part 'userActivity.g.dart';
 @JsonSerializable()
 class UserActivity {
 
-int? Id;
-int? UserId;
+int? id;
+int? userId;
 User? user;
-int? ActivityId;
+int? activityId;
 Activity? activity;
-DateTime? DateAssigned;
- String? Note;
- DateTime? CompletedAt;
- String? RewardTitle;
- DateTime? RewardedAt;
- String? Status;
+DateTime? dateAssigned;
+ String? note;
+ DateTime? completedAt;
+ String? rewardTitle;
+ DateTime? rewardedAt;
+ String? status;
 
 
 
 
   UserActivity({
-    this.Id,this.UserId,this.user,this.ActivityId,this.activity,this.DateAssigned,this.Note,this.CompletedAt,this.RewardTitle,this.RewardedAt,this.Status
+    this.id,this.userId,this.user,this.activityId,this.activity,this.dateAssigned,this.note,this.completedAt,this.rewardTitle,this.rewardedAt,this.status
     
   });
 

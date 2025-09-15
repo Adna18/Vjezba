@@ -24,6 +24,8 @@ namespace eCommerce.Services.Database
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
         public DbSet<Activity> Activity { get; set; }
         public DbSet<UserActivity> UserActivity { get; set; }
+        public DbSet<RewardRule> RewardRule { get; set; }
+
 
 
 

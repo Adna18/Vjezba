@@ -23,7 +23,7 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public async Task<List<UserResponse>> GetAsync(UserSearchObject search)
+        public async Task<PagedResult<UserResponse>> GetAsync(UserSearchObject search)
         {
             var query = _context.Users.AsQueryable();
             
@@ -45,9 +45,13 @@ namespace eCommerce.Services
                     u.Username.Contains(search.FTS) || 
                     u.Email.Contains(search.FTS));
             }
-            
-            var users = await query.ToListAsync();
-            return users.Select(MapToResponse).ToList();
+
+            var list = await query.ToListAsync();
+            return new PagedResult<UserResponse>
+            {
+                Items = list.Select(MapToResponse).ToList(),
+               
+            };
         }
 
         public async Task<UserResponse?> GetByIdAsync(int id)

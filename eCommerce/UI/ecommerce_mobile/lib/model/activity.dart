@@ -5,14 +5,14 @@ part 'activity.g.dart';
 @JsonSerializable()
 class Activity {
 
-int? Id;
-String? Name;
-String? Description;
-DateTime? DueDate;
+int? id;
+String? name;
+String? description;
+DateTime? dueDate;
 
 
   Activity({
-    this.Id,this.Name,this.Description,this.DueDate
+    this.id,this.name,this.description,this.dueDate
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) => _$ActivityFromJson(json);

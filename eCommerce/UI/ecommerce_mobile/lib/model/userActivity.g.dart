@@ -7,40 +7,40 @@ part of 'userActivity.dart';
 // **************************************************************************
 
 UserActivity _$UserActivityFromJson(Map<String, dynamic> json) => UserActivity(
-      Id: (json['Id'] as num?)?.toInt(),
-      UserId: (json['UserId'] as num?)?.toInt(),
+      id: (json['id'] as num?)?.toInt(),
+      userId: (json['userId'] as num?)?.toInt(),
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
-      ActivityId: (json['ActivityId'] as num?)?.toInt(),
+      activityId: (json['activityId'] as num?)?.toInt(),
       activity: json['activity'] == null
           ? null
           : Activity.fromJson(json['activity'] as Map<String, dynamic>),
-      DateAssigned: json['DateAssigned'] == null
+      dateAssigned: json['dateAssigned'] == null
           ? null
-          : DateTime.parse(json['DateAssigned'] as String),
-      Note: json['Note'] as String?,
-      CompletedAt: json['CompletedAt'] == null
+          : DateTime.parse(json['dateAssigned'] as String),
+      note: json['note'] as String?,
+      completedAt: json['completedAt'] == null
           ? null
-          : DateTime.parse(json['CompletedAt'] as String),
-      RewardTitle: json['RewardTitle'] as String?,
-      RewardedAt: json['RewardedAt'] == null
+          : DateTime.parse(json['completedAt'] as String),
+      rewardTitle: json['rewardTitle'] as String?,
+      rewardedAt: json['rewardedAt'] == null
           ? null
-          : DateTime.parse(json['RewardedAt'] as String),
-      Status: json['Status'] as String?,
+          : DateTime.parse(json['rewardedAt'] as String),
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$UserActivityToJson(UserActivity instance) =>
     <String, dynamic>{
-      'Id': instance.Id,
-      'UserId': instance.UserId,
+      'id': instance.id,
+      'userId': instance.userId,
       'user': instance.user,
-      'ActivityId': instance.ActivityId,
+      'activityId': instance.activityId,
       'activity': instance.activity,
-      'DateAssigned': instance.DateAssigned?.toIso8601String(),
-      'Note': instance.Note,
-      'CompletedAt': instance.CompletedAt?.toIso8601String(),
-      'RewardTitle': instance.RewardTitle,
-      'RewardedAt': instance.RewardedAt?.toIso8601String(),
-      'Status': instance.Status,
+      'dateAssigned': instance.dateAssigned?.toIso8601String(),
+      'note': instance.note,
+      'completedAt': instance.completedAt?.toIso8601String(),
+      'rewardTitle': instance.rewardTitle,
+      'rewardedAt': instance.rewardedAt?.toIso8601String(),
+      'status': instance.status,
     };

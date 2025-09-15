@@ -7,17 +7,17 @@ part of 'activity.dart';
 // **************************************************************************
 
 Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
-      Id: (json['Id'] as num?)?.toInt(),
-      Name: json['Name'] as String?,
-      Description: json['Description'] as String?,
-      DueDate: json['DueDate'] == null
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      dueDate: json['dueDate'] == null
           ? null
-          : DateTime.parse(json['DueDate'] as String),
+          : DateTime.parse(json['dueDate'] as String),
     );
 
 Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{
-      'Id': instance.Id,
-      'Name': instance.Name,
-      'Description': instance.Description,
-      'DueDate': instance.DueDate?.toIso8601String(),
+      'id': instance.id,
+      'name': instance.name,
+      'description': instance.description,
+      'dueDate': instance.dueDate?.toIso8601String(),
     };
